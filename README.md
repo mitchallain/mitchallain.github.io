@@ -41,6 +41,31 @@ To serve the site locally with the "livereload" option use
 bundle exec jekyll serve --livereload
 ```
 
+### Deploying to GitHub Pages
+
+GitHub Pages has poor compatibility with local compilation, but the strategy I
+am currently using is based on this [StackOverflow post](https://stackoverflow.com/a/35798092).
+
+Remove the contents of the `_site` directory.
+
+```
+rm -r _site/*
+```
+
+Clone the `gh-pages` branch to the `_site` directory.
+
+```
+git clone -b gh-pages `git config remote.origin.url` _site
+```
+
+Run jekyll build and push the new site contents to `gh-pages`.
+```
+jekyll build
+cd _site
+git add -A
+git commit -m "Latest post"
+```
+
 # Immaculate
 
 A beautiful, fast, AMP-compliant Jekyll theme based on Tufte CSS.
