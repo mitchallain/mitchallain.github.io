@@ -9,15 +9,15 @@
   <title>Tmux + Neovim for Robotics Development - Part 1 Dotfiles</title>
   <meta name="description" content="Table of Contents">
 
-  <link rel="canonical" href="http://localhost:4000/neovim-tmux-part-1.html">
-  <link rel="alternate" type="application/rss+xml" title="Mitchell's Blog" href="http://localhost:4000/feed.xml">
+  <link rel="canonical" href="https://mitchallain.github.io/neovim-tmux-part-1.html">
+  <link rel="alternate" type="application/rss+xml" title="Mitchell's Blog" href="https://mitchallain.github.io/feed.xml">
 
   <script type="application/ld+json">
   
 {
   "@context": "http://schema.org",
   "@type": "NewsArticle",
-  "mainEntityOfPage": "http://localhost:4000/neovim-tmux-part-1.html",
+  "mainEntityOfPage": "https://mitchallain.github.io/neovim-tmux-part-1.html",
   "headline": "Tmux + Neovim for Robotics Development - Part 1 Dotfiles",
   "datePublished": "2023-04-30T00:00:00-05:00",
   "dateModified": "2023-04-30T00:00:00-05:00",
@@ -31,14 +31,14 @@
     "name": "Mitchell's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:4000",
+      "url": "https://mitchallain.github.io",
       "width": 60,
       "height": 60
     }
   },
   "image": {
     "@type": "ImageObject",
-    "url": "http://localhost:4000",
+    "url": "https://mitchallain.github.io",
     "height": 60,
     "width": 60
   }
@@ -740,18 +740,19 @@ body {
     </ul>
   </li>
   <li>
-<a href="#dotfiles">Dotfiles</a>
+<a href="#version-controlling-dotfiles">Version Controlling Dotfiles</a>
     <ul>
       <li><a href="#option-1-symlinks-and-dotbot---recommended">Option 1: Symlinks and Dotbot - Recommended</a></li>
       <li><a href="#option-2-bare-git-repository">Option 2: Bare Git Repository</a></li>
-      <li>
-<a href="#dotfiles-tips">Dotfiles Tips</a>
-        <ul>
-          <li><a href="#naming-dotfiles">Naming Dotfiles</a></li>
-          <li><a href="#meld-or-diff-before-replacing">Meld or Diff Before Replacing</a></li>
-          <li><a href="#conditional-path-extensions">Conditional Path Extensions</a></li>
-        </ul>
-      </li>
+    </ul>
+  </li>
+  <li>
+<a href="#tips-for-maintaining-dotfiles">Tips for Maintaining Dotfiles</a>
+    <ul>
+      <li><a href="#naming-dotfiles">Naming Dotfiles</a></li>
+      <li><a href="#meld-or-diff-before-replacing">Meld or Diff Before Replacing</a></li>
+      <li><a href="#conditional-path-extensions">Conditional Path Extensions</a></li>
+      <li><a href="#reference-peers-dotfiles-and-share-your-own">Reference Peers Dotfiles and Share Your Own</a></li>
     </ul>
   </li>
 </ul>
@@ -767,15 +768,15 @@ other loosely-related CLI tools.</p>
 <p><strong>This is an opinionated series</strong>. Comparisons are based on my subjective
 experience, but I will try to breakdown trade-offs where appropriate.
 Development environments are highly individualized, even within the same
-application domain. I would love to hear your feedback.</p>
+application domain. That said, I would love to hear your feedback.</p>
 
 <h3 id="motivation">Motivation</h3>
 
 <p>For over 6 years now, I have been developing robotic software systems with
-<a href="https://www.ros.org/">ROS</a>, a framework which provides many of its tools for
-configuring, testing, and launching applications via the Linux command-line
-interface (CLI). In that time, I have developed a deep appreciation for certain
-characteristics of command-line tooling, namely:</p>
+<a href="https://www.ros.org/">ROS</a>, a framework which requires frequent interaction
+with the Linux command-line interface (CLI) for configuring, launching, and
+testing robotic systems. In that time, I have developed a deep appreciation for
+certain characteristics of command-line tooling, namely:</p>
 
 <ul>
   <li>
@@ -794,9 +795,11 @@ workflows from larger communities, including Linux system administration,
 systems programming, big data, and web development.</p>
 
 <p>The goal of this series is to introduce a focused set of CLI tools and workflows
-which lend themselves to supporting robotics development.</p>
+which lend themselves to supporting robotics development, and perhaps encourage
+younger robotics developers to invest in their shell development environment,
+which will pay dividends throughout their careers.</p>
 
-<h2 id="dotfiles">Dotfiles</h2>
+<h2 id="version-controlling-dotfiles">Version Controlling Dotfiles</h2>
 
 <p>Before you can begin to supercharge your development workflow with tmux and
 neovim (or improve your existing workflow with those tools), we have to talk
@@ -804,20 +807,34 @@ about <strong>dotfiles</strong>. Dotfiles are a colloquial term for the hidden c
 files which are located within a user’s home directory and subdirectories on
 UNIX-based systems (see also
 <a href="https://wiki.archlinux.org/title/XDG_Base_Directory"><code class="language-plaintext highlighter-rouge">XDG_CONFIG_HOME</code></a>), named
-after the leading dot character characteristic of hidden files.</p>
+after the leading dot (<code class="language-plaintext highlighter-rouge">.</code>) character characteristic of hidden files.</p>
 
 <p>If you have developed software within a Linux environment, you have likely
 edited some of these files — you may have even customized your <code class="language-plaintext highlighter-rouge">.bashrc</code>,
 <code class="language-plaintext highlighter-rouge">.bash_profile</code>, or created a <code class="language-plaintext highlighter-rouge">.bash_aliases</code> for some of your favorite bash
 functions. These files configure the shell and login environment, and are beyond
-the scope of this series. However, these are often a Linux users first
-interaction with dotfiles, followed by the configuration of installed programs
-and tools like <code class="language-plaintext highlighter-rouge">git</code> or <code class="language-plaintext highlighter-rouge">ssh</code>.</p>
+the scope of this series. However, these are often a Linux user’s first
+interaction with dotfiles, followed soon after by the configuration of installed
+programs and tools like <code class="language-plaintext highlighter-rouge">git</code> or <code class="language-plaintext highlighter-rouge">ssh</code>.</p>
 
 <p><strong>Your dotfiles should be tracked in a git repository and checked into source
-control.</strong> Whether you work with many Linux devices or just one development
-machine, and regardless of how frequently you setup a new Linux installation,
-you should be tracking changes to dotfiles in version control (e.g., git).</p>
+control.</strong> This provides a few benefits:</p>
+
+<ul>
+  <li>
+<strong>Efficiency</strong> - Reduce the time to setup a new installation of Linux, or to
+synchronize changes between multiple machines</li>
+  <li>
+<strong>Sharing</strong> - Easily share configuration files with peers (e.g., via public
+GitHub repository)</li>
+  <li>
+<strong>Change Management</strong> - View the history of modifications to your config files
+(i.e., the main benefit of VCS)</li>
+</ul>
+
+<p>Whether you work with many Linux devices or just one development machine, and
+regardless of how frequently you setup a new Linux installation, you should be
+tracking changes to dotfiles in version control (e.g., git).</p>
 
 <p>There are many ways to achieve this, but I will highlight two: via <strong>symlinks</strong>
 or <strong>a bare repository</strong>. While I will contrast the two in the following
@@ -831,10 +848,12 @@ to symlink those files back to their original directories. While this can be
 achieved without any external tooling, there is an excellent tool called
 <a href="https://github.com/anishathalye/dotbot">dotbot</a>, which facilitates symlink
 creation and can be embedded in your dotfiles as a submodule for a seamless
-setup experience.</p>
+setup experience. The <a href="https://github.com/anishathalye/dotbot">dotbot</a> repo
+provides plenty of instructions for setting up a new or existing dotfiles
+repository to use dotbot.</p>
 
 <p>While the next option is able to achieve the same end using only git, I have
-been pleased with using dotbot for many years, and therefore am happy to
+been pleased with using dotbot for many years and therefore am happy to
 recommend it.</p>
 
 <h3 id="option-2-bare-git-repository">Option 2: Bare Git Repository</h3>
@@ -845,38 +864,67 @@ and prevents the use of symlinks with some clever git configuration that
 separates the working directory (your <code class="language-plaintext highlighter-rouge">$HOME</code> folder) from a bare git
 repository, (e.g., <code class="language-plaintext highlighter-rouge">$HOME/.cfg</code>).</p>
 
-<h3 id="dotfiles-tips">Dotfiles Tips</h3>
+<h2 id="tips-for-maintaining-dotfiles">Tips for Maintaining Dotfiles</h2>
 
 <p>Regardless of which of the two prior options you choose, here are a few useful
 tips for maintaining a dotfiles repository through OS upgrades and across
 multiple systems.</p>
 
-<h4 id="naming-dotfiles">Naming Dotfiles</h4>
+<h3 id="naming-dotfiles">Naming Dotfiles</h3>
 
-<p>Some popular dotfiles examples on GitHub will omit the leading dot character from the source filename, e.g. <code class="language-plaintext highlighter-rouge">.bashrc -&gt; /home/mallain/dotfiles/bashrc</code>, however this can cause syntax highlighting to suffer in some editors and therefore is not recommended.</p>
+<p>Some popular dotfiles examples on GitHub will omit the leading dot character
+from the source filename, e.g. <code class="language-plaintext highlighter-rouge">.bashrc -&gt; /home/mallain/dotfiles/bashrc</code>,
+however this can cause syntax highlighting to suffer in some editors and
+therefore is not recommended.</p>
 
-<h4 id="meld-or-diff-before-replacing">Meld or Diff Before Replacing</h4>
+<h3 id="meld-or-diff-before-replacing">Meld or Diff Before Replacing</h3>
 
-<p>It is good practice when upgrading to new Linux distributions to use <code class="language-plaintext highlighter-rouge">diff</code> to compare the default shell configuration for that distribution with that of your dotfiles, before replacing the former. As an alternative, <code class="language-plaintext highlighter-rouge">meld</code> could be used to merge in any changes interactively.</p>
+<p>It is good practice when upgrading to new Linux distributions to use <code class="language-plaintext highlighter-rouge">diff</code> to
+compare the default shell configuration for that distribution with that of your
+dotfiles, before replacing the former. As an alternative, <code class="language-plaintext highlighter-rouge">meld</code> could be used
+to merge in any changes interactively.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>diff ~/.bashrc ~/dotfiles/.bashrc
 </code></pre></div></div>
 
-<h4 id="conditional-path-extensions">Conditional Path Extensions</h4>
+<h3 id="conditional-path-extensions">Conditional Path Extensions</h3>
 
-<p>As you begin to share shell configuration, you may experience a common pain point. Say for instance, you install a new language or framework on machine A which requires sourcing an environment script in <code class="language-plaintext highlighter-rouge">~/.bashrc</code> (e.g., <code class="language-plaintext highlighter-rouge">. $HOME/.cargo/env</code>), and you diligently check-in that change to your dotfiles. A week later, you pull your dotfiles to machine B, and open a new terminal session only to find an ugly error message.</p>
+<p>As you begin to share shell configuration, you may experience a common pain
+point. Say for instance, you install a new language or framework on machine A
+which requires sourcing an environment script in <code class="language-plaintext highlighter-rouge">~/.bashrc</code> (e.g.,
+<code class="language-plaintext highlighter-rouge">. $HOME/.cargo/env</code>), and you diligently check-in that change to your dotfiles.
+A week later, you pull your dotfiles to machine B, and open a new terminal
+session only to find an ugly error message.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-bash: /home/mallain/.cargo/env: No such file or directory
 </code></pre></div></div>
 
-<p>With experience and some bash scripting, you can begin to shape your dotfiles to be resilient to these types of failures by adding bash conditionals (at the small expense of shell startup time), e.g.,</p>
+<p>With experience and some bash scripting, you can begin to shape your dotfiles to
+be resilient to these types of failures by adding bash conditionals (at the
+small expense of shell startup time), e.g.,</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cargo env exists and is readable
-if [ -r "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
-fi
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># cargo env exists and is readable</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nt">-r</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.cargo/env"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">.</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.cargo/env"</span>
+<span class="k">fi</span>
 </code></pre></div></div>
 
+<h3 id="reference-peers-dotfiles-and-share-your-own">Reference Peers Dotfiles and Share Your Own</h3>
+
+<p><a href="https://github.com/mitchallain/dotfiles">My dotfiles</a> are the result of many
+years of professional development experience, but I was helped along by other
+developers that thought to share their own configuration. Some of those are:</p>
+
+<ul>
+  <li>
+<a href="https://github.com/ThePrimeagen/.dotfiles">ThePrimeagen</a> - Netflix engineer
+and <a href="https://www.youtube.com/@ThePrimeagen">YouTuber</a>
+</li>
+  <li>
+<a href="https://github.com/craftzdog/dotfiles-public">craftzdog</a> - Web developer and
+<a href="https://www.youtube.com/@devaslife">YouTuber</a>
+</li>
+</ul>
 
   </section>
 
