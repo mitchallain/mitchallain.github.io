@@ -3,7 +3,8 @@ $baseurl: '{{ site.baseurl }}';
 $grey-color: #828282;
 
 @import 'tufte';
-// @import 'syntax-highlighting';
+// @import 'lean_tufte';
+@import 'syntax-highlighting';
 
 main {
   margin-top: 20px;
@@ -39,7 +40,11 @@ pre {
 }
 
 code {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  font-size: 1.125rem;
-  line-height: 1.6;
+  font-family: Menlo, Consolas, "Liberation Mono", Courier, monospace;
+  font-size: 1.0rem;
+  line-height: 1.4;
+}
+
+body {
+  font-size: 1.0rem;
 }

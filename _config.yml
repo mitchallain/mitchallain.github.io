@@ -1,12 +1,14 @@
-title: Immaculate
+title: Mitchell's Blog
 description: >
-  A beautiful, fast, AMP-compliant Jekyll theme based on Tufte CSS.
-url: "https://github.com/siawyoung/immaculate"
+  Software and robotics
+url: "https://mitchallain.github.io"
 paginate:	2 # The number of posts to show per page on your homepage
-name: "Lau Siaw Young"
+name: "Mitchell Allain"
+email: "allain.mitch@gmail.com"
 markdown: kramdown
 permalink: none
 kramdown:
   parse_block_html: true
 plugins:
   - jekyll-paginate
+  - jemoji

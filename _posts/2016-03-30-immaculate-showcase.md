@@ -72,14 +72,20 @@ proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 Here is a code block{% sidenote side3 I have not turned on syntax highlighting. Frankly, it can be distracting in this minimalistic environment. %}:
 
-```ruby
-class beautiful_ruby_class
-  def initialize
-    do_some_magical_stuff
-  end
+```python
+import sys
+import inspect
 
-  def beautiful_method
-    change_the_world
-  end
-end
+import pydantic
+import yaml
+
+
+class BaseModel(pydantic.BaseModel):
+    """Extension of pydantic.BaseModel to support YAML parsing"""
+    @classmethod
+    def parse_yaml(cls, filepath):
+        """Parse YAML file into pydantic model"""
+        with open(filepath, "r") as f:
+            config = yaml.safe_load(f)
+        return cls.parse_obj(config)
 ```
