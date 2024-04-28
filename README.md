@@ -4,6 +4,30 @@ A blog on robotic software development (and other fringe interests) built around
 the excellent Jekyll theme
 [Immaculate](https://github.com/siawyoung/immaculate).
 
+## Develop with Nix
+
+> Bundix makes it easy to package your Bundler-enabled Ruby applications with
+> the Nix package manager.
+
+from [Bundix README](https://github.com/nix-community/bundix)
+
+This repo depends on the nokogiri gem which appears to require special treatment
+within nix. I was able to
+
+- remove the `Gemfile.lock` and `gemset.nix`
+- run `BUNDLE_FORCE_RUBY_PLATFORM=true nix run nixpkgs#bundix -- --lock`
+  - this re-creates the lock file and gemset.nix with the ruby platform (this
+    seems to have
+    [something to do with use of pre-compiled binaries](https://nokogiri.org/tutorials/installing_nokogiri.html#why-would-i-not-want-to-use-a-native-gem)
+    as
+    [discussed here](https://discourse.nixos.org/t/issues-with-nix-reproducibility-on-macos-trying-to-build-nokogiri-ruby-error-unknown-warning-option/22019/8))
+
+Note the
+[nixpkgs entry for Ruby](https://nixos.org/manual/nixpkgs/stable/#sec-language-ruby)
+and section on
+[Developing with Ruby](https://nixos.org/manual/nixpkgs/stable/#developing-with-ruby)
+were particularly helpful here.
+
 ## Development
 
 See the [Jekyll docs](https://jekyllrb.com/docs/) and
@@ -24,7 +48,8 @@ Then, install bundler using gem
 sudo gem install bundler
 ```
 
-On Ubuntu, ensure `GEM_HOME` and `BUNDLE_PATH` are set within the user-space, e.g., `~/.gems`.
+On Ubuntu, ensure `GEM_HOME` and `BUNDLE_PATH` are set within the user-space,
+e.g., `~/.gems`.
 
 ### Install Site Repo and Deps
 
@@ -44,7 +69,8 @@ bundle exec jekyll serve --livereload
 ### Deploying to GitHub Pages
 
 GitHub Pages has poor compatibility with local compilation, but the strategy I
-am currently using is based on this [StackOverflow post](https://stackoverflow.com/a/35798092).
+am currently using is based on this
+[StackOverflow post](https://stackoverflow.com/a/35798092).
 
 Remove the contents of the `_site` directory.
 
@@ -59,6 +85,7 @@ git clone -b gh-pages `git config remote.origin.url` _site
 ```
 
 Run jekyll build and push the new site contents to `gh-pages`.
+
 ```
 jekyll build
 cd _site

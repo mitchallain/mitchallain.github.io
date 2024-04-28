@@ -4,4 +4,6 @@ title: Contact
 permalink: /contact/
 ---
 
-File issues at [https://github.com/siawyoung/immaculate/issues](https://github.com/siawyoung/immaculate/issues)!
+Please reach out to me on
+[LinkedIn](https://www.linkedin.com/in/mitchell-allain/) or see some of my
+projects on [GitHub](https://github.com/mitchallain).

@@ -8,15 +8,15 @@ title: Tmux + Neovim for Robotics Development - Part 1 Dotfiles
 <!-- vim-markdown-toc GFM -->
 
 * [Tmux + Neovim for Robotics Development - A Series](#tmux--neovim-for-robotics-development---a-series)
-    * [Motivation](#motivation)
+  * [Motivation](#motivation)
 * [Version Controlling Dotfiles](#version-controlling-dotfiles)
-    * [Option 1: Symlinks and Dotbot - Recommended](#option-1-symlinks-and-dotbot---recommended)
-    * [Option 2: Bare Git Repository](#option-2-bare-git-repository)
+  * [Option 1: Symlinks and Dotbot - Recommended](#option-1-symlinks-and-dotbot---recommended)
+  * [Option 2: Bare Git Repository](#option-2-bare-git-repository)
 * [Tips for Maintaining Dotfiles](#tips-for-maintaining-dotfiles)
-    * [Naming Dotfiles](#naming-dotfiles)
-    * [Meld or Diff Before Replacing](#meld-or-diff-before-replacing)
-    * [Conditional Path Extensions](#conditional-path-extensions)
-    * [Reference Peers Dotfiles and Share Your Own](#reference-peers-dotfiles-and-share-your-own)
+  * [Naming Dotfiles](#naming-dotfiles)
+  * [Meld or Diff Before Replacing](#meld-or-diff-before-replacing)
+  * [Conditional Path Extensions](#conditional-path-extensions)
+  * [Reference Peers Dotfiles and Share Your Own](#reference-peers-dotfiles-and-share-your-own)
 
 <!-- vim-markdown-toc -->
 
@@ -158,7 +158,7 @@ With experience and some bash scripting, you can begin to shape your dotfiles to
 be resilient to these types of failures by adding bash conditionals (at the
 small expense of shell startup time), e.g.,
 
-```
+```bash
 # cargo env exists and is readable
 if [ -r "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
@@ -169,7 +169,7 @@ fi
 
 [My dotfiles](https://github.com/mitchallain/dotfiles) are the result of many
 years of professional development experience, but I was helped along by other
-developers that thought to share their own configuration. Some of those are
+developers that thought to share their own configuration. Some of those are:
 
 - [ThePrimeagen](https://github.com/ThePrimeagen/.dotfiles) - Netflix engineer
   and [YouTuber](https://www.youtube.com/@ThePrimeagen)
