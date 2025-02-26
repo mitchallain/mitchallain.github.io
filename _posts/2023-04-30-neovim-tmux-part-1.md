@@ -8,15 +8,15 @@ title: Tmux + Neovim for Robotics Development - Part 1 Dotfiles
 <!-- vim-markdown-toc GFM -->
 
 * [Tmux + Neovim for Robotics Development - A Series](#tmux--neovim-for-robotics-development---a-series)
-  * [Motivation](#motivation)
+    * [Motivation](#motivation)
 * [Version Controlling Dotfiles](#version-controlling-dotfiles)
-  * [Option 1: Symlinks and Dotbot - Recommended](#option-1-symlinks-and-dotbot---recommended)
-  * [Option 2: Bare Git Repository](#option-2-bare-git-repository)
+    * [Option 1: Symlinks and Dotbot - Recommended](#option-1-symlinks-and-dotbot---recommended)
+    * [Option 2: Bare Git Repository](#option-2-bare-git-repository)
 * [Tips for Maintaining Dotfiles](#tips-for-maintaining-dotfiles)
-  * [Naming Dotfiles](#naming-dotfiles)
-  * [Meld or Diff Before Replacing](#meld-or-diff-before-replacing)
-  * [Conditional Path Extensions](#conditional-path-extensions)
-  * [Reference Peers Dotfiles and Share Your Own](#reference-peers-dotfiles-and-share-your-own)
+    * [Naming Dotfiles](#naming-dotfiles)
+    * [Meld or Diff Before Replacing](#meld-or-diff-before-replacing)
+    * [Conditional Path Extensions](#conditional-path-extensions)
+    * [Reference Peers Dotfiles and Share Your Own](#reference-peers-dotfiles-and-share-your-own)
 
 <!-- vim-markdown-toc -->
 
@@ -44,8 +44,8 @@ certain characteristics of command-line tooling, namely:
 - the stability of command structures and options relative to the ever-changing
   nature of GUIs, desktop environments, and operating systems (e.g., git versus
   your favorite graphical git tool)
-- the ability to use the same tooling on an embedded device (without X11
-  forwarding)
+- the ability to use the same tooling when connected to an embedded device via
+  SSH (without X11 forwarding)
 
 However, robotics software development remains a relatively small sub-field of
 professional software engineering, which often leads us to borrow tooling and

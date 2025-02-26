@@ -11,3 +11,4 @@ kramdown:
 plugins:
   - jekyll-paginate
   - jemoji
+google_analytics: G-N9G5289DKX
